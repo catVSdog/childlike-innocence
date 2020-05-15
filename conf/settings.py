@@ -1,3 +1,12 @@
 """
 开发环境配置
 """
+
+# mysql 相关配置
+
+MYSQL_HOST = "127.0.0.1"
+MYSQL_PORT = '3306'
+MYSQL_USER_NAME = 'an'
+MYSQL_PASSWORD = '123'
+
+YOU_KONW_NOTHING = 'SNOW'
