@@ -1,7 +1,7 @@
 from flask import Flask
 
 
-def create_app(config=None, flask=Flask(__name__)):
+def create_app(config=None, flask=Flask('childlike-innocence')):
     from applications import auth, blog
     from conf import database_manager
 
@@ -18,8 +18,13 @@ def create_app(config=None, flask=Flask(__name__)):
         app.config.from_mapping(**config)
 
     database_manager.init_app(app)
+
     auth.init_app(app)
     blog.init_app(app)
+
+    @app.route('/hello/')
+    def hello():
+        return "hello"
 
     return app
 
