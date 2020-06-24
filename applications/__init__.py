@@ -3,7 +3,7 @@ from flask import Flask
 
 def create_app(config=None, flask=Flask('childlike-innocence')):
     from applications import auth, blog
-    from conf import database_manager
+    import database_manger
 
     app = flask
 
@@ -17,7 +17,7 @@ def create_app(config=None, flask=Flask('childlike-innocence')):
         # config 中的键均需为大写格式,否则会被忽略
         app.config.from_mapping(**config)
 
-    database_manager.init_app(app)
+    database_manger.init_app(app)
 
     auth.init_app(app)
     blog.init_app(app)
