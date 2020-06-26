@@ -16,7 +16,7 @@ class User(UserMixin, BaseModel):
     # store raw password
     _password = None
 
-    def set_password(self, password):
+    def set_password(self, row_password):
         password_handler = Argon2Handler()
-        self.password = password_handler.encode(password)
-        self._password = password
+        self.password = password_handler.encode(row_password)
+        self._password = row_password
