@@ -1,9 +1,10 @@
 """
 生产环境配置
 """
-import os
 
 from conf.settings import *
+
+# mysql
 
 MYSQL_HOST = "127.0.0.1"
 MYSQL_PORT = '3306'
