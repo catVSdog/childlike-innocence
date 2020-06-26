@@ -1,0 +1,17 @@
+files: '^applications.*.py$|^database.*.py$'
+repos:
+-   repo: https://github.com/PyCQA/pylint.git
+    rev: master
+    hooks:
+    -   id: pylint
+        args:
+            - --rcfile=./.pylintrc
+
+-   repo: https://github.com/timothycrosley/isort.git
+    rev: master
+    hooks:
+    -   id: isort
+
+
+
+

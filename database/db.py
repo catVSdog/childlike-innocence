@@ -1,5 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import MetaData
+from sqlalchemy import Column, DateTime, Integer, MetaData, func
 
 convention = {
     "ix": 'ix_%(column_0_label)s',
@@ -15,3 +15,9 @@ db = SQLAlchemy(metadata=metadata)
 
 def init_app(app):
     db.init_app(app)
+
+
+class BaseModel(db.Model):
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    create_time = Column(DateTime, server_default=func.now())
+    update_time = Column(DateTime, server_default=func.now(), onupdate=func.now())
