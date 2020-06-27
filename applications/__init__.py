@@ -3,7 +3,7 @@ from flask_session import Session
 
 
 def create_app(config=None, flask=Flask('childlike-innocence')):
-    from applications import auth, blog
+    from applications import admin, blog
     import database
 
     env_settings_map = {
@@ -18,7 +18,7 @@ def create_app(config=None, flask=Flask('childlike-innocence')):
 
     Session(flask)
     database.init_app(flask)
-    auth.init_app(flask)
+    admin.init_app(flask)
     blog.init_app(flask)
 
     return flask

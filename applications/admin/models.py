@@ -1,4 +1,4 @@
-from applications.auth.password_handler import Argon2Handler
+from applications.admin.password_handler import Argon2Handler
 from database.db import BaseModel
 from flask_login import UserMixin
 from sqlalchemy import Column, DateTime, String
