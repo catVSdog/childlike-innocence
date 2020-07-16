@@ -1,18 +1,17 @@
-from flask.views import MethodView
+from flask_restful import Resource
 
 
-class RegisterView(MethodView):
-    methods = ['GET', 'POST']
+class UserResource(Resource):
+    """用户信息"""
+
+    @staticmethod
+    def get(user_id):
+        return {'message': user_id}
+
+
+class UserListResource(Resource):
+    """用户列表信息"""
 
     @staticmethod
     def get():
-        print("register")
-        return 'hello'
-
-
-class IndexView(MethodView):
-    methods = ['GET']
-
-    @staticmethod
-    def get():
-        return 'idex'
+        return {'message': 'ok'}

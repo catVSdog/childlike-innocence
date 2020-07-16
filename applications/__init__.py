@@ -1,10 +1,9 @@
 from flask import Flask
-from flask_session import Session
 
 
 def create_app(config=None, flask=Flask('childlike-innocence')):
-    from applications import admin, blog
     import database
+    from applications import admin, blog
 
     env_settings_map = {
         'development': 'conf.settings',
@@ -16,7 +15,7 @@ def create_app(config=None, flask=Flask('childlike-innocence')):
         # config 中的键均需为大写格式,否则会被忽略
         flask.config.from_mapping(**config)
 
-    Session(flask)
+    # Session(flask)
     database.init_app(flask)
     admin.init_app(flask)
     blog.init_app(flask)

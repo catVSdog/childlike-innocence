@@ -12,7 +12,8 @@ class User(UserMixin, BaseModel):
     password = Column(String(255), nullable=False)
     email = Column(String(255), unique=True, nullable=False)
     last_login = Column(DateTime)
-    role_id = Column(Integer, ForeignKey('Role.id'))
+    role_id = Column(Integer, ForeignKey('role.id'))
+    validated = Column(String(255), unique=True)  # 用来存储用户邮箱验证信息。非空--未验证；空--邮箱已验证
 
     def __str__(self):
         return f'<User: {self.username}>'

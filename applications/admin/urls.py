@@ -1,7 +1,11 @@
-from applications.admin.views import IndexView, RegisterView
 from flask import Blueprint
+from flask_restful import Api
 
-urlpattern = Blueprint('admin', __name__, url_prefix='/admin', template_folder='templates')
+from applications.admin.views import UserListResource, UserResource
 
-urlpattern.add_url_rule('/register', view_func=RegisterView.as_view('register'))
-urlpattern.add_url_rule('/index', view_func=IndexView.as_view('index'))
+admin_bp = Blueprint('backend_admin', __name__, url_prefix='/backend_admin')
+
+rest_api = Api()
+rest_api.init_app(admin_bp)
+rest_api.add_resource(UserListResource, '/user/')
+rest_api.add_resource(UserResource, '/user/<user_id>')
