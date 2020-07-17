@@ -14,4 +14,4 @@ class BlogListResource(Resource):
 
     @staticmethod
     def get():
-        return {'message': 'ok'}
+        return {'message': 'ok， next one'}
