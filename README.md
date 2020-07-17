@@ -4,7 +4,7 @@
 ### 相关命令
 
 1.数据库初始化
-```python
+```
 flask db init --multidb
 ```
 
