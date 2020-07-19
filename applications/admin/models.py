@@ -1,5 +1,6 @@
 from flask_login import UserMixin
-from sqlalchemy import Column, DateTime, ForeignKey, Integer, String, Text
+from sqlalchemy import (Boolean, Column, DateTime, ForeignKey, Integer, String,
+                        Text)
 from sqlalchemy.orm import relationship
 
 from applications.admin.password_handler import Argon2Handler
@@ -13,21 +14,18 @@ class User(UserMixin, BaseModel):
     email = Column(String(255), unique=True, nullable=False)
     last_login = Column(DateTime)
     role_id = Column(Integer, ForeignKey('role.id'))
-    validated = Column(String(255), unique=True)  # 用来存储用户邮箱验证信息。非空--未验证；空--邮箱已验证
+    validated = Column(Boolean, default=False)
 
     def __str__(self):
         return f'<User: {self.username}>'
 
-    # store raw password
-    _password = None
+    password_handler = Argon2Handler()
 
     def set_password(self, row_password):
-        password_handler = Argon2Handler()
-        self.password = password_handler.encode(row_password)
-        self._password = row_password
+        self.password = self.password_handler.encode(row_password)
 
     def check_password(self, row_password):
-        pass
+        return self.password_handler.verify(row_password, self.password)
 
 
 class Role(BaseModel):
