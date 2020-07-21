@@ -17,11 +17,11 @@ MYSQL_USER_NAME = 'an'
 MYSQL_PASSWORD = '123'
 
 # sqlalchemy
-
+# ! db must exists in databases
 SQLALCHEMY_TRACK_MODIFICATIONS = False
-SQLALCHEMY_DATABASE_URI = f'mysql+pymysql://{MYSQL_USER_NAME}:{MYSQL_PASSWORD}@{MYSQL_HOST}:{MYSQL_PORT}/default_db'
+SQLALCHEMY_DATABASE_URI = f'mysql+pymysql://{MYSQL_USER_NAME}:{MYSQL_PASSWORD}@{MYSQL_HOST}:{MYSQL_PORT}/admin_db'
 SQLALCHEMY_BINDS = {
-    'blog': f'mysql+pymysql://{MYSQL_USER_NAME}:{MYSQL_PASSWORD}@{MYSQL_HOST}:{MYSQL_PORT}/blogs_db',
+    'blog': f'mysql+pymysql://{MYSQL_USER_NAME}:{MYSQL_PASSWORD}@{MYSQL_HOST}:{MYSQL_PORT}/blog_db',
 }
 
 # session
@@ -29,5 +29,5 @@ SQLALCHEMY_BINDS = {
 SESSION_COOKIE_NAME = 'SESSION_ID'
 SESSION_TYPE = 'redis'
 SESSION_USE_SIGNER = True
-SESSION_REDIS = redis.Redis()
-PERMANENT_SESSION_LIFETIME = 60 * 60 * 1
+SESSION_REDIS = redis.Redis()  # localhost redis, 0 db
+PERMANENT_SESSION_LIFETIME = 60 * 60  # 1 hour

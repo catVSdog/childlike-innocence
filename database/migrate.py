@@ -1,8 +1,9 @@
+# pylint:disable=unused-import
 from flask_migrate import Migrate
 
 
 def init_app(app):
-    from applications.admin.models import User  # pylint:disable=unused-import
+    from applications.admin.models import BasicAuth, Oauth2Auth, Role, User
     from database.db import db
 
 

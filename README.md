@@ -3,7 +3,7 @@
 
 ### 相关命令
 
-1.数据库初始化
+1.Flask Migrate 初始化
 ```
 flask db init --multidb
 ```
