@@ -11,11 +11,13 @@ from database.db import BaseModel
 
 class User(UserMixin, BaseModel):
     __tablename__ = 'user'
+    __bind_key__ = 'admin'  # if not set this property, use default database, SQLALCHEMY_DATABASE_URI's value
     nicknanme = Column(String(30), nullable=False, default='神秘用户')
     about_me = Column(String(255), nullable=True)
     profile_picture = Column(Text, nullable=True)
     last_login = Column(DateTime, default=datetime.now())
     role_id = Column(Integer, ForeignKey('role.id'))
+    role = relationship('Role', backref=backref('user'), lazy=True)
 
     def __str__(self):
         return f'<User: {self.nicknanme}>'
@@ -23,6 +25,7 @@ class User(UserMixin, BaseModel):
 
 class BasicAuth(BaseModel):
     __tablename__ = 'basic_auth'
+    __bind_key__ = 'admin'
     username = Column(String(10), unique=True)
     mobile = Column(String(11), unique=True)
     email = Column(String(50), unique=True)
@@ -46,9 +49,10 @@ class BasicAuth(BaseModel):
 
 class Oauth2Auth(BaseModel):
     __tablename__ = 'oauth2_auth'
+    __bind_key__ = 'admin'
     third_type = Column(Integer)  # 1.weibo 2.weixin
-    auth_name = Column(String(255), unique=True)
-    auth_token = Column(String(255), unique=True)
+    auth_name = Column(String(50), unique=True)
+    auth_token = Column(String(100))
     is_validated = Column(Boolean, default=False)
     expires = Column(Integer)  # 时间戳
     user_id = Column(Integer, ForeignKey('user.id'))
@@ -60,12 +64,12 @@ class Oauth2Auth(BaseModel):
 
 class Role(BaseModel):
     __tablename__ = 'role'
-    name = Column(String(50), unique=True, nullable=True)
-    color = Column(String(20), unique=True, nullable=True)
-    is_default_role = Column(Boolean, default=False)  # 动态配置某条记录是否为默认
-    permissions = Column(Integer)
+    __bind_key__ = 'admin'
+    name = Column(String(50), unique=True, nullable=False)
     description = Column(String(255))  # 描述角色权限
-    user = relationship('User', backref='role', lazy=True)
+    color = Column(String(20), unique=True, nullable=False)
+    is_default_role = Column(Boolean, default=False)  # 动态配置某条记录是否为默认
+    permissions = Column(Integer, unique=True, nullable=False)
 
     def __str__(self):
         return f'<Role: {self.name}-{self.description}>'

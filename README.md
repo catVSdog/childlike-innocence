@@ -10,7 +10,7 @@ flask db init --multidb
 
 2.创建迁移文件
 ```python
-flask db migrate -m "Initial migration."
+flask db migrate -m "Initial migration"
 ```
 
 3.迁移数据库
