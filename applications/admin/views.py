@@ -1,3 +1,4 @@
+from flask import jsonify
 from flask_restful import Resource
 
 
@@ -6,7 +7,7 @@ class UserResource(Resource):
 
     @staticmethod
     def get(user_id):
-        return {'message': user_id}
+        return jsonify({'message': user_id})
 
 
 class UserListResource(Resource):
@@ -14,4 +15,4 @@ class UserListResource(Resource):
 
     @staticmethod
     def get():
-        return {'message': 'ok'}
+        return jsonify({'message': 'ok'})

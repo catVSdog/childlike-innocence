@@ -6,7 +6,7 @@ from sqlalchemy import (Boolean, Column, DateTime, ForeignKey, Integer, String,
 from sqlalchemy.orm import backref, relationship
 
 from applications.admin.password_handler import Argon2Handler
-from database.db import BaseModel
+from database.db import BaseModel, db
 
 
 class User(UserMixin, BaseModel):
@@ -15,12 +15,17 @@ class User(UserMixin, BaseModel):
     nicknanme = Column(String(30), nullable=False, default='神秘用户')
     about_me = Column(String(255), nullable=True)
     profile_picture = Column(Text, nullable=True)
-    last_login = Column(DateTime, default=datetime.now())
+    joined_time = Column(DateTime, default=datetime.utcnow)
+    lastest_login = Column(DateTime, default=datetime.utcnow)
     role_id = Column(Integer, ForeignKey('role.id'))
     role = relationship('Role', backref=backref('user'), lazy=True)
 
     def __str__(self):
         return f'<User: {self.nicknanme}>'
+
+    def update_lastest_login(self):
+        self.lastest_login = datetime.utcnow()
+        db.session.add(self)
 
 
 class BasicAuth(BaseModel):
