@@ -1,6 +1,6 @@
 from sqlalchemy import Column, String
 
-from database.db import BaseModel
+from applications.common.base_model import BaseModel
 
 
 class Post(BaseModel):

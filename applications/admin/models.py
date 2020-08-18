@@ -6,7 +6,8 @@ from sqlalchemy import (Boolean, Column, DateTime, ForeignKey, Integer, String,
 from sqlalchemy.orm import backref, relationship
 
 from applications.admin.password_handler import Argon2Handler
-from database.db import BaseModel, db
+from applications.common.base_model import BaseModel
+from database.db import db
 
 
 class User(UserMixin, BaseModel):

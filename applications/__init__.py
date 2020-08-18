@@ -4,7 +4,7 @@ from flask_session import Session
 
 def create_app(config=None, flask=Flask('childlike-innocence')):
     import database
-    from applications import admin, blog
+    from applications import admin, blog, common
 
     env_settings_map = {
         'development': 'conf.settings',
@@ -18,6 +18,7 @@ def create_app(config=None, flask=Flask('childlike-innocence')):
 
     Session(flask)
     database.init_app(flask)
+    common.init_app(flask)
     admin.init_app(flask)
     blog.init_app(flask)
 
