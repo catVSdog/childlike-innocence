@@ -1,8 +1,8 @@
 from datetime import datetime
 
 from flask_login import UserMixin
-from sqlalchemy import (Boolean, Column, DateTime, ForeignKey, Integer, String,
-                        Text)
+from sqlalchemy import (Boolean, Column, DateTime, ForeignKey, Integer,
+                        SmallInteger, String, Text)
 from sqlalchemy.orm import backref, relationship
 
 from applications.admin.password_handler import Argon2Handler
@@ -21,7 +21,7 @@ class User(UserMixin, BaseModel):
     role_id = Column(Integer, ForeignKey('role.id'))
     role = relationship('Role', backref=backref('user'), lazy=True)
 
-    def __str__(self):
+    def __repr__(self):
         return f'<User: {self.nicknanme}>'
 
     def update_lastest_login(self):
@@ -41,7 +41,7 @@ class BasicAuth(BaseModel):
     user_id = Column(Integer, ForeignKey('user.id'))
     user = relationship('User', backref=backref('basic', uselist=False), lazy=True)
 
-    def __str__(self):
+    def __repr__(self):
         return f'<BasicAuth: {self.username or self.mobile or self.email}'
 
     password_handler = Argon2Handler()
@@ -64,7 +64,7 @@ class Oauth2Auth(BaseModel):
     user_id = Column(Integer, ForeignKey('user.id'))
     user = relationship('User', backref=backref('oauth', uselist=False), lazy=True)
 
-    def __str__(self):
+    def __repr__(self):
         return f'<OAuth2: {self.third_type}-{self.auth_name}'
 
 
@@ -75,7 +75,25 @@ class Role(BaseModel):
     description = Column(String(255))  # 描述角色权限
     color = Column(String(20), unique=True, nullable=False)
     is_default_role = Column(Boolean, default=False)  # 动态配置某条记录是否为默认
-    permissions = Column(Integer, unique=True, nullable=False)
+    permission_id = Column(Integer, ForeignKey('permission.id'))
+    permission = relationship('Permission', backref=backref("role", uselist=False))
+
+    def __repr__(self):
+        return f'<Role: {self.name}-{self.description}>'
 
     def __str__(self):
-        return f'<Role: {self.name}-{self.description}>'
+        return 'Role'
+
+
+class Permission(BaseModel):
+    __tablename__ = 'permission'
+    __bind_key__ = 'admin'
+    description = Column(String(100), nullable=False)
+    bit_number = Column(SmallInteger, nullable=False, unique=True)
+    code = Column(String(50), nullable=False, unique=True)
+
+    def __repr__(self):
+        return f'<Permission: {self.description}>'
+
+    def __str__(self):
+        return 'Permission'
