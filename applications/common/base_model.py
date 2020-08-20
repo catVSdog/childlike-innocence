@@ -22,25 +22,24 @@ class BaseModel(db.Model):
             raise exec
         return instance
 
-    @classmethod
-    def update(cls, instance, **kwargs):
-        # todo: may be need query first
+    def update(self, **kwargs):
         try:
             for key, value in kwargs.items():
-                if not hasattr(instance, key):
-                    raise AttributeError(f"'{instance}' object has no attribute '{key}'")
-                instance.key = value
+                if not hasattr(self, key):
+                    raise AttributeError(f"'{self}' object has no attribute '{key}'")
+                setattr(self, key, value)
             db.session.commit()
         except Exception as exec:
             db.session.rollback()
             raise exec
-        return instance
 
-    @classmethod
-    def delete(cls, instance):
-        # todo: may be need query first
-        db.session.delete(instance)
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
 
-    def save(self, *args, **kwargs):
-        # todo: like Django, object method, used by add/update
-        pass
+    def save(self):
+        if self.id is None:
+            db.session.add(self)
+            db.session.commit()
+        else:
+            db.session.commit()
