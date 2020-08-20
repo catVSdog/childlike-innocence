@@ -11,6 +11,9 @@ class BaseModel(db.Model):
     create_time = Column(DateTime, default=datetime.utcnow)
     update_time = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
+    def __str__(self):
+        return self.__class__.__name__  # return Model name
+
     @classmethod
     def create(cls, **kwargs):
         instance = cls(**kwargs)

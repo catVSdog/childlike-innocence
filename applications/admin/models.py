@@ -81,9 +81,6 @@ class Role(BaseModel):
     def __repr__(self):
         return f'<Role: {self.name}-{self.description}>'
 
-    def __str__(self):
-        return 'Role'
-
 
 class Permission(BaseModel):
     __tablename__ = 'permission'
@@ -94,6 +91,3 @@ class Permission(BaseModel):
 
     def __repr__(self):
         return f'<Permission: {self.description}>'
-
-    def __str__(self):
-        return 'Permission'
